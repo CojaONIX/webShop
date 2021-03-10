@@ -1,3 +1,34 @@
+/*nav*/
+
+.navbar{
+  background-color: gray;
+  color: white;
+}
+a.nav-link{
+  color: rgb(83, 81, 81);
+  font-weight: bold;
+}
+
+a.nav-link:hover{
+  color: rgb(255, 255, 255);
+}
+
+.navbar-nav li:hover .dropdown-menu {
+  display: block;
+}
+
+/* rotate caret on hover */
+/* .dropdown-menu > li > a:hover:after {
+  text-decoration: underline;
+  transform: rotate(-90deg);
+}  */
+
+
+.dropdown-menu  {
+  background-color: gray;
+}
+
+
 /*footer*/
 footer{
     background-color: gray;
