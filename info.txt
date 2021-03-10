@@ -1,0 +1,1 @@
+poenta je da imamo samo index.php od fajlova u root-u projekta. on ce da proverava da li je korisnik ulogovan i ako jeste da ga salje na home, ako nije onda na login.
