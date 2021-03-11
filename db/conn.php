@@ -8,7 +8,7 @@
     if ($conn->connect_error) {
         echo "<p>Connection failed: " . $conn->connect_error . "</p>";
     } else {
-        echo "<p>Connected successfully: $database</p>";
+        // echo "<p>Connected successfully: $DATABASE</p>";
     }
 
 ?>
