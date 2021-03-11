@@ -1,0 +1,1 @@
+bs, jQuery, plugins... ako zatrebaju na local

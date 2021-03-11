@@ -20,7 +20,7 @@
     </style>
 <body>
     <?php
-        include "nav.php";
+        include "components/nav.php";
     ?>
 
     <h1>Izbor i Kupovina proizvoda</h1>

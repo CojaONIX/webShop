@@ -1,1 +1,0 @@
-ovde idu fajlovi poput hedera, footera itd... njih ubacujemo u views tj glavne stranice
