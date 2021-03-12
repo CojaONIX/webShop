@@ -9,8 +9,8 @@
 <body>
     
 <?php
-    $myfile = fopen("db_data.sql", "r") or die("Unable to open file!");
-    $sql = fread($myfile,filesize("db_data.sql"));
+    $myfile = fopen("sql/db_data.sql", "r") or die("Unable to open file!");
+    $sql = fread($myfile,filesize("sql/db_data.sql"));
     fclose($myfile);
 
     require_once "conn.php";
