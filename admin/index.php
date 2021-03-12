@@ -26,6 +26,21 @@
             transition: 0.3s;
         }
 
+
+        /* Animacija pri otvaranj Modal */
+        .modal.fade .modal-dialog {
+            transform: scale(0.1);
+            opacity: 0;
+            transition: all 0.5s;
+        }
+        .modal.fade.show .modal-dialog {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+
+
+
     </style>
 </head>
 <body>
@@ -67,10 +82,10 @@
 <?php
     require_once "../db/conn.php";
 
-    function drawTable($result) {
+    function drawTable($result, $tableID) {
         if($result->num_rows > 0) {
             echo "<div class='divInLine'>";
-            echo "<table class='display compact'>";
+            echo "<table id='$tableID' class='display compact'>";
 
             $columns = array_keys($result->fetch_assoc());
             $zaglavlje = implode("</th><th>", $columns);
@@ -122,7 +137,7 @@
                 <hr />
                 <?php
                     $result = $conn->store_result();
-                    drawTable($result);
+                    drawTable($result, "tblMainCategories");
                 ?>
             </div>
 
@@ -132,7 +147,7 @@
                 <?php
                     $conn->next_result();
                     $result = $conn->store_result();
-                    drawTable($result);
+                    drawTable($result, "tblCategories");
                 ?>
             </div>
 
@@ -142,7 +157,7 @@
                 <?php
                     $conn->next_result();
                     $result = $conn->store_result();
-                    drawTable($result);
+                    drawTable($result, "tblProducts");
                 ?>
             </div>
 
@@ -156,6 +171,27 @@
 
 
 </main>
+
+<div class="modal fade" id="formModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                 <h3 id="tblName" class="modal-title"></h3>
+                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                 <h5 id="idData" class="text-center"></h5>
+ 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default " data-dismiss="modal">Apply!</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!--
 <footer class="container-fluid">
@@ -172,17 +208,27 @@
                     loadingRecords: '<img src="loading.gif" style="width: 160px; height: 20px;" /><br/>Loading...'
                 }
             });
-        });
+
+            $('table').on('click', 'tr', function () {
+                var tblName = $(this).parents('table').attr('id');
+                $('#tblName').text(tblName);
+                var name = $('td', this).eq(1).text();
+                $('#idData').text(name);
+                $('#formModal').modal("show");
+            });
 
 
-        $('#tabMenu button').click(function () {
-            $('#tabContents > div').slideUp(600);
-            $('#tabMenu button').removeClass('active');
-            $(this).addClass('active');
-            $('#tabContents > div').eq($(this).index()).slideDown(600);
+            $('#tabMenu button').click(function () {
+                $('#tabContents > div').slideUp(600);
+                $('#tabMenu button').removeClass('active');
+                $(this).addClass('active');
+                $('#tabContents > div').eq($(this).index()).slideDown(600);
+            });
+            $('#tabMenu button').addClass('btn btn-outline-primary');
+            $('#tabMenu button').eq(2).click();
+
+
         });
-        $('#tabMenu button').addClass('btn btn-outline-primary');
-        $('#tabMenu button').eq(2).click();
     </script>
 </body>
 </html>
