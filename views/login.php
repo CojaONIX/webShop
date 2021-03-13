@@ -1,6 +1,5 @@
 <?php
-    include './components/head.php';
-    include './components/nav.php';
+    require_once './components/nav.php';
 ?>
 
 <div class="container">
