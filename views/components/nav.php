@@ -1,7 +1,8 @@
 
 
 <nav class="navbar navbar-expand-md navbar-light bg-light ms-3 me-2 mb-5">
-  <a class="navbar-brand" href="home.php">WEBSHOP</a>
+  <a class="navbar-brand" href="home.php">Home</a>
+  <a class="navbar-brand" href="shop.php">SHOP</a>
   <button
   class="navbar-toggler"
   type="button"
