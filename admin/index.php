@@ -84,16 +84,22 @@
 
     function drawTable($result, $tableID) {
         if($result->num_rows > 0) {
-            echo "<div class='divInLine'>";
-            echo "<table id='$tableID' class='display compact'>";
-
+            echo "<div id='$tableID' class='tblDiv'>";
+            echo "<button class='C'>C</button>";
+            echo "<table class='display compact'>";
+            
             $columns = array_keys($result->fetch_assoc());
             $zaglavlje = implode("</th><th>", $columns);
-            echo "\n\t<thead><tr><th>$zaglavlje</th></tr></thead>";
+            echo "\n\t<thead><tr><th>Action</th><th>$zaglavlje</th></tr></thead>";
 
             echo "\n\t<tbody>";
             foreach($result as $row) {
-                echo "<tr><td>" . implode("</td><td>", $row) . "</td></tr>\n";
+                $actions = "<td>";
+                $actions .= "<button class='R'>R</button>";
+                $actions .= "<button class='U'>U</button>";
+                $actions .= "<button class='D'>D</button>";
+                $actions .= "</td>";
+                echo "<tr>$actions<td>" . implode("</td><td>", $row) . "</td></tr>\n";
             }
             echo "</tbody>";
             
@@ -137,7 +143,7 @@
                 <hr />
                 <?php
                     $result = $conn->store_result();
-                    drawTable($result, "tblMainCategories");
+                    drawTable($result, "main_categories");
                 ?>
             </div>
 
@@ -147,7 +153,7 @@
                 <?php
                     $conn->next_result();
                     $result = $conn->store_result();
-                    drawTable($result, "tblCategories");
+                    drawTable($result, "categories");
                 ?>
             </div>
 
@@ -157,7 +163,7 @@
                 <?php
                     $conn->next_result();
                     $result = $conn->store_result();
-                    drawTable($result, "tblProducts");
+                    drawTable($result, "products");
                 ?>
             </div>
 
@@ -172,50 +178,34 @@
 
 </main>
 
-<div class="modal fade" id="formModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                 <h3 id="tblName" class="modal-title"></h3>
-                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
-            </div>
-            <div class="modal-body">
-                 <h5 id="idData" class="text-center"></h5>
- 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default " data-dismiss="modal">Apply!</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!--
-<footer class="container-fluid">
-    <p>Footer</p>
-</footer>
--->
-
-
     
     <script>
         $(document).ready(function () {
-            $('table').DataTable({
-                language: {
-                    loadingRecords: '<img src="loading.gif" style="width: 160px; height: 20px;" /><br/>Loading...'
-                }
+            $('.C').on('click', function () {
+                var tblName = $(this).parents('.tblDiv').attr('id');
+                window.location.href = "crud/C_" + tblName + ".php";
             });
 
-            $('table').on('click', 'tr', function () {
-                var tblName = $(this).parents('table').attr('id');
-                $('#tblName').text(tblName);
-                var name = $('td', this).eq(1).text();
-                $('#idData').text(name);
-                $('#formModal').modal("show");
+            $('.R').on('click', function () {
+                var tblName = $(this).parents('.tblDiv').attr('id');
+                var id = $(this).parent().next().text();
+                window.location.href = "crud/R_" + tblName + ".php?id=" + id;
             });
+
+            $('.U').on('click', function () {
+                var tblName = $(this).parents('.tblDiv').attr('id');
+                var id = $(this).parent().next().text();
+                window.location.href = "crud/U_" + tblName + ".php?id=" + id;
+            });
+
+            $('.D').on('click', function () {
+                var tblName = $(this).parents('.tblDiv').attr('id');
+                var id = $(this).parent().next().text();
+                window.location.href = "crud/D_" + tblName + ".php?id=" + id;
+            });
+
+            $('table').DataTable();
+
 
 
             $('#tabMenu button').click(function () {
