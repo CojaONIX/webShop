@@ -1,9 +1,7 @@
-<?php
-  require_once 'head.php';
-?>
+
 
 <nav class="navbar navbar-expand-md navbar-light bg-light ms-3 me-2 mb-5">
-  <a class="navbar-brand" href="/WEBSHOP/index.php">WEBSHOP</a>
+  <a class="navbar-brand" href="home.php">WEBSHOP</a>
   <button
   class="navbar-toggler"
   type="button"
@@ -15,10 +13,10 @@
   <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
     <ul class="navbar-nav nav text-center">
       <li class="nav-item">
-        <a class="nav-link" href="/WEBSHOP/views/login.php">Login</a>
+        <a class="nav-link" href="login.php">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/WEBSHOP/views/register.php">Register</a>
+        <a class="nav-link" href="register.php">Register</a>
       </li>
     </ul>
   </div>
