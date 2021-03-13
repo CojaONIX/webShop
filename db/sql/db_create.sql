@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS users_data (
   FOREIGN KEY (users_id) REFERENCES users(id)
 ) ENGINE = InnoDB;
 
-
+ 
 -- -----------------------------------------------------
 -- Table orders
 -- -----------------------------------------------------
