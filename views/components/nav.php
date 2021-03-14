@@ -1,72 +1,43 @@
 
+<style>
 
-<nav class="navbar navbar-expand-md navbar-light bg-light ms-3 me-2 mb-5">
-  <a class="navbar-brand" href="home.php">Home</a>
-  <a class="navbar-brand" href="shop.php">SHOP</a>
-  <button
-  class="navbar-toggler"
-  type="button"
-  data-toggle="collapse"
-  data-target="#collapsibleNavbar"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
-    <ul class="navbar-nav nav text-center">
-      <li class="nav-item">
-        <a class="nav-link" href="login.php">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="register.php">Register</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+</style>
 
-<!-- <nav class="navbar navbar-expand-lg">
-  <a class="navbar-brand" href="#">WebShop</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
+<div class="container">
+  <nav class="navbar navbar-expand-md navbar-light bg-light ms-3 me-2 mb-5">
+    <a id="logo" class="navbar-brand" href="home.php">webShop</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Shop</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
 
-    <ul class="navbar-nav ml-auto">
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-user-alt"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">login</a>
-          <a class="dropdown-item" href="#">register</a>
+      <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item active">
+          <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="shop.php">Shop</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
 
-        </div>
-      </li>
-    </ul>
-  </div>
-</nav> -->
+      <ul class="navbar-nav nav text-center">
+        <li class="nav-item">
+          <a class="nav-link" href="login.php">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="register.php">Register</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
 
-<!--jumbotron-->
 
-<!-- <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Welcome to web shop</h1>
-    <img src="Slike/3.jpeg" class="img-thumbnail " alt="...">
-    <p class="lead">Welcome to webShop...</p>
-  </div>
-</div> -->
 
-<!--nav meni-->
-
-<!--slider-->
