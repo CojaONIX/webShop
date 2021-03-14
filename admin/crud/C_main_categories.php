@@ -1,14 +1,18 @@
 <?php
-require_once "validation/validation.php";
-include "assets/views/components/head.php";
+
+// putanja treba da pocne sa ../../
+require_once "../../validation/validation.php";
+
+// za sad ne mora a inace putanja krece sa ../../ umesto a assets
+//include "assets/views/components/head.php";
 
 $validated = true;
 $name = $description = "";
 $nameErr = $descriptionErr = "";
 
-
-if($_SERVER(['REQUEST_METHOD'=='$_POST'])){
-
+// zagrada ] je na losem mestu i visak ()
+//if($_SERVER(['REQUEST_METHOD'=='$_POST'])){
+if($_SERVER['REQUEST_METHOD'] == '$_POST'){
     $name=$_POST['name'];
     $description=$_POST['description'];
 

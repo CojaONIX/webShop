@@ -14,6 +14,8 @@ function textValidation($text){
     }
     else{
         return false;
+    }
+// flalila jedna } zagrada
 }
 
 //description
