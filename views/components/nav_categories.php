@@ -82,7 +82,7 @@ ul {
 <hr>
 
 <script>
-    $('#catLeftMenu h5').append('<img src="images/Icons/add-circle-outline.svg" class="symbolRotate" />');
+    $('#catLeftMenu h5').append('<img src="images/icons/add-circle-outline.svg" class="symbolRotate">');
 
     $('ul li ul').toggle(500);
     $('#catLeftMenu h5').click(function () {
