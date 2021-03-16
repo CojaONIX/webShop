@@ -26,11 +26,13 @@
     $except = preg_match('/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix', $str);
     $length = strlen($str);
 
-    if (!$except && $length <= 45) return true;
+    // TODO: dodaj proveru da li u bazi vec postoji email
+    if ($except && $length <= 45) return true;
     return false;
   }
 
   function validateUsername($conn, $str) {
+    // TODO: mozda da izbacis potpuno ili smanjis broj dozvoljenih spec chara
     $except = preg_match('/[^a-zA-Z\ĐđŽžĆćČčŠš\d\.\@\-\_\#\$]/', $str);
     $length = strlen($str);
 
@@ -45,7 +47,7 @@
   function validatePassword($str) {
     $length = strlen($str);
 
-    // TODO: u bazi je stavljeno da sifra mora da bude 32 chara duga, promeni CHAR(32) u VARCHAR(45)
+    // TODO: u bazi je stavljeno CHAR(32), toliko vraca md5(), ako se prebacujes na password_hash() stavi VARCHAR(255)
     // TODO: dodaj regex za proveru da li sadrzi barem 1 veliko slovo, 1 specijalan char i 1 broj
     if ($length >= 8 && $length <= 32) return true;
     return false;
