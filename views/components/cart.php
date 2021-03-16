@@ -33,12 +33,16 @@
             <div id="tblCart" class="modal-body">
             </div>
 
+            <div class="card mb-3">
+                <div class="card-footer">
+                    <h3 id="totalCart" style="text-align: right;">Total: 0.00</h3>
+                </div>
+            </div>
+
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Checkout</button>
-                <h3>Total:</h3>
-                <h3 id="totalCart">0.00</h3>
             </div>
 
         </div>
@@ -47,10 +51,16 @@
 
 <script>
     
-    jsonCart = localStorage.getItem("jsonCart");
+    jsonCart = JSON.parse(localStorage.getItem("jsonCart"));
     if(jsonCart == null) {
         jsonCart = [];
     }
+    var qtyTotal = 0;
+    $.each( jsonCart, function(index, value) {
+        qtyTotal += parseInt(value['pqty']);
+    });
+    $('#badgeCart').text(qtyTotal);
+
     $('#modalCart').on('show.bs.modal', function (e) {
         $('#tblCart').empty();
         $.each( jsonCart, function(index, value) {
@@ -62,19 +72,16 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="row">
+                        <div class="d-flex justify-content-between">
                             <h4>${value['pprice']}</h4>
                             <input id="qty${value['pid']}" type="number" min="1" style="width: 70px; text-align: center;" value=${value['pqty']}>
+                            <h4 class="subtotal">0.00</h4>
                         </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <h3 style="text-align: right;">0.00</h3>
                     </div>
                 </div>`);
 
         });
-        //$('#tblCart').html(JSON.stringify(jsonCart));
+        drawTotals();
     })
     
 

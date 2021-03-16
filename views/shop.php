@@ -2,9 +2,9 @@
     require_once "components/head.php";
 ?>
 
-    <?php
-        include "components/nav.php";
-    ?>
+<?php
+    include "components/nav.php";
+?>
 
 
 <div class="container">
@@ -67,33 +67,62 @@
     
 
     <script>
-     $('.ATC').click(function() {
-        var id = $(this).data('pid');
-        var insertNew = true;
-        $.each( jsonCart, function(index, value) {
-            if(value['pid'] == id) {
-                value['pqty']++;
-                insertNew = false;
+        $('.ATC').click(function() {
+            var id = $(this).data('pid');
+            var insertNew = true;
+            $('#badgeCart').text(parseInt($('#badgeCart').text()) + 1);
+            $.each( jsonCart, function(index, value) {
+                if(value['pid'] == id) {
+                    value['pqty']++;
+                    insertNew = false;
+                }
+            });
+            if(insertNew) {
+                jsonCart.push({
+                    pid: $(this).data('pid'),
+                    pname: $(this).data('pname'),
+                    pprice: $(this).data('pprice'),
+                    pqty: 1
+                });
             }
+            localStorage.setItem("jsonCart", JSON.stringify(jsonCart));
         });
-        if(insertNew) {
-            jsonCart.push({
-                pid: $(this).data('pid'),
-                pname: $(this).data('pname'),
-                pprice: $(this).data('pprice'),
-                pqty: 1
+
+        $(document.body)
+        .on('click', ".cartRemoveProduct", function () {
+                var $card = $(this).closest(".card");
+                $card.hide(500, function () {
+                    jsonCart.splice( $card.index(), 1 );
+                    $card.remove();
+                    drawTotals();
+                });
+        })
+        .on('input', "#tblCart .card-body input", function () {
+            var v = $(this).val();
+            if (v == '') v = 1;
+            v = parseInt(v);
+            if (v < 1) v = 1;
+            $(this).val(v);
+
+            jsonCart[$("#tblCart .card-body input").index($(this))]['pqty'] = $(this).val();
+            drawTotals();
+        });
+
+        function drawTotals() {
+            var total = 0;
+            var subTotal;
+            var qtyTotal = 0;
+            $.each( jsonCart, function(index, value) {
+                subTotal = value['pprice'] * value['pqty'];
+                total += subTotal;
+                $('.subtotal').eq(index).text(subTotal.toFixed(2));
+                qtyTotal += parseInt(value['pqty']);
             });
+            $('#totalCart').text('Total: ' + total.toFixed(2));
+            $('#badgeCart').text(qtyTotal);
+
+            localStorage.setItem("jsonCart", JSON.stringify(jsonCart));
         }
-     });
-
-     $(document.body)
-     .on('click', ".cartRemoveProduct", function () {
-            var $card = $(this).closest(".card");
-            $card.hide(500, function () {
-                $card.remove();
-            });
-    });
-
 
     </script>
 </body>
