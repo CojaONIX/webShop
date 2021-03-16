@@ -44,7 +44,8 @@ ul {
 </style>
 
 <hr>
-<div id="catLeftMenu">
+
+<div id="catLeftMenu"  class="container">
     <h5>Categories</h5>
 
 
