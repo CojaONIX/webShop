@@ -1,4 +1,14 @@
 
+<style>
+    summary {
+        background-color: #eee;
+        padding: 4px 10px;
+        border-radius: 12px;
+        border: 2px solid #ccc;
+        outline: none;
+    }
+</style>
+
 <hr>
 <h2 class="text-center">Featured products</h2>
 <hr>
@@ -22,12 +32,15 @@
                             <img class="card-img-top" src="images/products/<?php echo $row['id']; ?>.jpeg" onerror="this.onerror=null; this.src='images/noImage.jpg'">
 
                             <div class="card-body">
-                                <p><?php echo $row['short_description']; ?></p>
+                                <details>
+                                    <summary><?php echo $row['short_description']; ?></summary>
+                                    <?php echo $row['long_description']; ?>
+                                </details>
                             </div>
 
                             <div class="card-footer">
-                                <h3><?php echo $row['price']; ?></h3>
-                                <a class="btn btn-primary stretched-link" href="shop.php">Shop</a>
+                                <h3 class="text-right"><?php echo $row['price']; ?></h3>
+                                <a class="btn btn-primary float-right" href="shop.php">Shop</a>
                             </div>
                         </div>
                     </div>
@@ -42,3 +55,10 @@
 
     </div>
 </div>
+
+<!-- <button id="cls">Clear Local Storage</button>
+<script>
+        $('#cls').click(function() {
+            localStorage.removeItem('jsonCart');
+        });
+</script> -->

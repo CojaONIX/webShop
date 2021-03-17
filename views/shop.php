@@ -6,6 +6,15 @@
     include "components/nav.php";
 ?>
 
+<style>
+    summary {
+        background-color: #eee;
+        padding: 4px 10px;
+        border-radius: 12px;
+        border: 2px solid #ccc;
+        outline: none;
+    }
+</style>
 
 <div class="container">
     <div class="row">
@@ -34,13 +43,15 @@
                                         <img class="card-img-top" src="images/products/<?php echo $row['id']; ?>.jpeg" onerror="this.onerror=null; this.src='images/noImage.jpg'">
 
                                         <div class="card-body">
-                                            <p title="<?php echo $row['long_description']; ?>"><?php echo $row['short_description']; ?></p>
+                                            <details>
+                                                <summary><?php echo $row['short_description']; ?></summary>
+                                                <?php echo $row['long_description']; ?>
+                                            </details>
                                         </div>
 
                                         <div class="card-footer">
-                                            <h3><?php echo $row['price']; ?></h3>
-                                            <a class="btn btn-primary" href="shop.php">Shop</a>
-                                            <button class="ATC btn btn-primary" data-pid=<?php echo $row['id']; ?> data-pname="<?php echo $row['name']; ?>" data-pprice=<?php echo $row['price']; ?>>Add to Cart</button>
+                                            <h3 class="text-right"><?php echo $row['price']; ?></h3>
+                                            <button class="ATC btn btn-primary float-right" data-pid=<?php echo $row['id']; ?> data-pname="<?php echo $row['name']; ?>" data-pprice=<?php echo $row['price']; ?>>Add to Cart</button>
                                         </div>
                                     </div>
                                 </div>
@@ -67,62 +78,7 @@
     
 
     <script>
-        $('.ATC').click(function() {
-            var id = $(this).data('pid');
-            var insertNew = true;
-            $('#badgeCart').text(parseInt($('#badgeCart').text()) + 1);
-            $.each( jsonCart, function(index, value) {
-                if(value['pid'] == id) {
-                    value['pqty']++;
-                    insertNew = false;
-                }
-            });
-            if(insertNew) {
-                jsonCart.push({
-                    pid: $(this).data('pid'),
-                    pname: $(this).data('pname'),
-                    pprice: $(this).data('pprice'),
-                    pqty: 1
-                });
-            }
-            localStorage.setItem("jsonCart", JSON.stringify(jsonCart));
-        });
 
-        $(document.body)
-        .on('click', ".cartRemoveProduct", function () {
-                var $card = $(this).closest(".card");
-                $card.hide(500, function () {
-                    jsonCart.splice( $card.index(), 1 );
-                    $card.remove();
-                    drawTotals();
-                });
-        })
-        .on('input', "#tblCart .card-body input", function () {
-            var v = $(this).val();
-            if (v == '') v = 1;
-            v = parseInt(v);
-            if (v < 1) v = 1;
-            $(this).val(v);
-
-            jsonCart[$("#tblCart .card-body input").index($(this))]['pqty'] = $(this).val();
-            drawTotals();
-        });
-
-        function drawTotals() {
-            var total = 0;
-            var subTotal;
-            var qtyTotal = 0;
-            $.each( jsonCart, function(index, value) {
-                subTotal = value['pprice'] * value['pqty'];
-                total += subTotal;
-                $('.subtotal').eq(index).text(subTotal.toFixed(2));
-                qtyTotal += parseInt(value['pqty']);
-            });
-            $('#totalCart').text('Total: ' + total.toFixed(2));
-            $('#badgeCart').text(qtyTotal);
-
-            localStorage.setItem("jsonCart", JSON.stringify(jsonCart));
-        }
 
     </script>
 </body>
