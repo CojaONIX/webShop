@@ -7,7 +7,8 @@
 
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-5">
 
-  <a id="logo" class="navbar-brand" href="home.php">webShop</a>
+  <a class="navbar-brand" href="home.php"><img id="logo" src="images/logo.png" alt="logo"></a>
+  
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
