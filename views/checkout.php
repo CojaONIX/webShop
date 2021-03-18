@@ -8,7 +8,7 @@
 
 <style>
     #cartData img {
-        width: 60px;
+        width: 80px;
     }
 </style>
 
@@ -20,13 +20,10 @@
         if(!isset($_SESSION["id"])) { 
             ?>
             <div class="container">
-                <table id="cartData" class="table">
+                <table id="cartData" class="table table-sm">
                     <tr>
-                        <th>Product</th>
-                        <th>Image</th>
-                        <th>Price</th>
-                        <th>Qty</th>
-                        <th>Total</th>
+                        <!-- <th>Product</th> -->
+                        <th colspan=4>Cart Products</th>
                     </tr>
                 </table>
             </div>
@@ -47,20 +44,22 @@
             total += subTotal;
             $('#cartData').append(`
                 <tr>
-                    <td>${value['pname']}</td>
-                    <td><img src="images/products/${value['pid']}.jpeg"></td>
-                    <td>${value['pprice']}</td>
-                    <td>${value['pqty']}</td>
-                    <td>${subTotal.toFixed(2)}</td>
+                    <td rowspan=2><img src="images/products/${value['pid']}.jpeg"></td>
+                    <td colspan=3>${value['pname']}</td>
+                    <tr>
+                        <td>${value['pprice']}</td>
+                        <td class="text-center">${value['pqty']}</td>
+                        <td class="text-right">${subTotal.toFixed(2)}</td>
+                    </tr>
                 <tr>
             `);
         });
 
         $('#cartData').append(`
             <tr>
-                <th colspan=3></th>
-                <th>Total:</th>
-                <th>${total.toFixed(2)}</th>
+                <th colspan=2></th>
+                <th class="text-right">Total:</th>
+                <th class="text-right">${total.toFixed(2)}</th>
             <tr>
         `);
 
