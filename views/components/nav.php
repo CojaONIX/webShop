@@ -1,9 +1,4 @@
-<!-- TODO: ovde treba da se ispita da li je korisnik logovan, ako nije prikazi samo login/register -->
-<!-- TODO: ako jeste, prikazi, ostalo i logout... -->
-<!-- TODO: ako je korisnik admin (role === "admin" - treba da se prepravi baza) onda ubaci i link ka admin stranicama (ADMIN) -->
-<!-- TODO: mozda da se stavi podmeni za admina ako ima vise linkova/stranica, ili na admin stranicama da se ubaci jos jedan navbar -->
 
-<!-- REMINDER: neka u tabeli "users" default "role" vrednost php postavlja kao "user", a rucno ce se unositi admini (role === "admin")  -->
 
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-5">
 
@@ -34,6 +29,21 @@
       </li>
     </ul>
 
+<?php
+  session_start();
+
+  if(isset($_SESSION['user_id'])) { ?>
+      <ul class="navbar-nav nav text-center">
+      <li class="nav-item">
+        <a class="nav-link" href="profile.php">Hello, <?php echo $_SESSION['user_name']; ?></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link pr-0" href="logout.php">Logout</a>
+      </li>
+    </ul>
+  <?php
+    } else { ?>
+
     <ul class="navbar-nav nav text-center">
       <li class="nav-item">
         <a class="nav-link" href="login.php">Login</a>
@@ -42,6 +52,10 @@
         <a class="nav-link pr-0" href="register.php">Register</a>
       </li>
     </ul>
+  <?php
+  }
+?>
+
 
   </div>
 
