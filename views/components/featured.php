@@ -31,7 +31,7 @@
 
                             <img class="card-img-top" src="images/products/<?php echo $row['id']; ?>.jpeg" onerror="this.onerror=null; this.src='images/noImage.jpg'">
 
-                            <div class="card-body">
+                            <div class="card-body p-2">
                                 <details>
                                     <summary><?php echo $row['short_description']; ?></summary>
                                     <?php echo $row['long_description']; ?>

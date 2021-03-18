@@ -29,6 +29,9 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Contact</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="checkout.php">Checkout</a>
+      </li>
     </ul>
 
     <ul class="navbar-nav nav text-center">

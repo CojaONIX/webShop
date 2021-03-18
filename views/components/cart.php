@@ -51,7 +51,7 @@
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Checkout</button>
+                <a href="checkout.php" class="btn btn-primary">Checkout</a>
             </div>
 
         </div>
@@ -83,7 +83,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h4>${value['pprice']}</h4>
-                            <input id="qty${value['pid']}" type="number" min="1" style="width: 70px; text-align: center;" value=${value['pqty']}>
+                            <input type="number" min="1" style="width: 70px; text-align: center;" value=${value['pqty']}>
                             <h4 class="subtotal">0.00</h4>
                         </div>
                     </div>
