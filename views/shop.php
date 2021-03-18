@@ -4,6 +4,7 @@
 
 <?php
     include "components/nav.php";
+    $_SESSION['back_page'] = "shop.php";
 ?>
 
 <style>

@@ -6,6 +6,7 @@
 
 <?php
     include "components/nav.php";
+    $_SESSION['back_page'] = "home.php";
 ?>
 
 <?php

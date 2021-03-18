@@ -4,6 +4,7 @@
 
 <?php
     include "components/nav.php";
+    $_SESSION['back_page'] = "checkout.php";
 ?>
 
 <style>
@@ -61,9 +62,6 @@
             echo "<h4 class='text-center'>To continue shopping, please login</h4>";
         }
     ?>
-
-    <button class="btn btn-info" onclick="window.history.back();">Cancel</button>
-
 
 
 </body>

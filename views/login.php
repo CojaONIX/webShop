@@ -36,7 +36,7 @@
               } else {
                   $_SESSION["user_id"] = $row["id"];
                   $_SESSION['user_name'] = $row['username'];
-                  header("Location: home.php");
+                  header("Location: " . $_SESSION['back_page']);
               }
           }
       }
