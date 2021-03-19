@@ -1,6 +1,6 @@
 <?php
   require_once "components/head.php";
-  require_once './components/nav.php';
+  require_once 'components/nav.php';
 
   //session_start();
 
@@ -61,7 +61,6 @@
                             <input type="password" class="form-control" name="pass" id="pass">
                         </div>                
                         <input type="submit" value="Login" class="btn btn-primary form-control">
-                        <small class="d-block my-3">Doesn't have an account? <a href="register.php">Register now</a></small>
                     </form>
                 </div>
 
