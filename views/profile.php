@@ -42,8 +42,12 @@
         <hr>
             <h2 class="text-center">Upload Avatar</h2>
             <hr>
-            <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui magna. Ad proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat velit nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor. Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.</p>
-
+            <img src="profile/avatars/<?php echo $_SESSION['user_id']; ?>.jpg" onerror="this.onerror=null; this.src='profile/avatars/noImage.jpg'">
+            <form action="profile/upload.php" method="post" enctype="multipart/form-data">
+                <h4>Select image to upload:</h4>
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="submit" value="Upload Image" name="submit">
+            </form>
         </div>
 
         <div>
@@ -84,7 +88,7 @@
                 $('#tabContents > div').eq($(this).index()).slideDown(600);
             });
             $('#tabMenu button').addClass('btn btn-outline-primary');
-            $('#tabMenu button').eq(0).click();
+            $('#tabMenu button').eq(1).click();
 
 
         });

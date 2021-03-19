@@ -12,7 +12,7 @@
         width: 60px;
         height: 50px;
         cursor: pointer;
-        filter: drop-shadow(0 0 6px yellow);
+        filter: drop-shadow(0 0 6px goldenrod);
     }
 
     #badgeCart {
