@@ -6,7 +6,7 @@
 
     $filename = $_FILES["fileToUpload"]["name"];
     $extension = (explode(".", $filename))[1];
-    $target_file = $target_dir . $_SESSION['user_id'] .".".$extension;
+    $target_file = $target_dir . $_SESSION['user_name'] .".".$extension;
     //$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
     $uploadOk = true;

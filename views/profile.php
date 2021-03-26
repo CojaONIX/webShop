@@ -1,9 +1,11 @@
 <?php
     require_once "components/head.php";
-?>
-
-<?php
     include "components/nav.php";
+
+    $_SESSION['back_page'] = basename($_SERVER['PHP_SELF']);
+    if(!isset($_SESSION['user_id'])) {
+        header("Location: login.php");
+    }
 ?>
 
 <style>
@@ -19,80 +21,15 @@
 
 </style>
 
-<main class="container">
-    <div id="tabMenu" class="row">
-        <button>Profile</button>
-        <button>Upload Avatar</button>
-        <button>Change Password</button>
-        <button>Orders</button>
-        <button>Other</button>
-    </div>
+    <main class="container">
+        <a href="profile_cprof.php"><button class="btn btn-outline-primary">Change Profile</button></a>
+        <a href="profile_cpass.php"><button class="btn btn-outline-primary">Change Password</button></a>
+        <a href="profile_cavatar.php"><button class="btn btn-outline-primary">Change Avatar</button></a>
 
 
-    <div id="tabContents">
-        <div>
-            <hr>
-            <h2 class="text-center">Profile</h2>
-            <hr>
-            <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui magna. Ad proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat velit nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor. Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.</p>
-
-        </div>
-
-        <div>
-        <hr>
-            <h2 class="text-center">Upload Avatar</h2>
-            <hr>
-            <img src="profile/avatars/<?php echo $_SESSION['user_id']; ?>.jpg" onerror="this.onerror=null; this.src='profile/avatars/noImage.jpg'">
-            <form action="profile/upload.php" method="post" enctype="multipart/form-data">
-                <h4>Select image to upload:</h4>
-                <input type="file" name="fileToUpload" id="fileToUpload">
-                <input type="submit" value="Upload Image" name="submit">
-            </form>
-        </div>
-
-        <div>
-        <hr>
-            <h2 class="text-center">Change Password</h2>
-            <hr>
-            <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui magna. Ad proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat velit nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor. Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.</p>
-
-        </div>
-
-        <div>
-        <hr>
-            <h2 class="text-center">Orders</h2>
-            <hr>
-            <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui magna. Ad proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat velit nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor. Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.</p>
-
-        </div>
-
-        <div>
-        <hr>
-            <h2 class="text-center">Other</h2>
-            <hr>
-            <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui magna. Ad proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat velit nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor. Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.</p>
-
-        </div>
-    </div>
+    </main>
 
 
-
-</main>
-
-<script>
-        $(document).ready(function () {
-            $('#tabMenu button').click(function () {
-                $('#tabContents > div').slideUp(600);
-                $('#tabMenu button').removeClass('active');
-                $(this).addClass('active');
-                $('#tabContents > div').eq($(this).index()).slideDown(600);
-            });
-            $('#tabMenu button').addClass('btn btn-outline-primary');
-            $('#tabMenu button').eq(1).click();
-
-
-        });
-    </script>
     
 </body>
 </html>

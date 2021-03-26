@@ -6,7 +6,7 @@
 
 <?php
     include "components/nav.php";
-    $_SESSION['back_page'] = "home.php";
+    $_SESSION['back_page'] = basename($_SERVER['PHP_SELF']);
 ?>
 
 <?php
