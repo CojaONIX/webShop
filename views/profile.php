@@ -56,9 +56,32 @@
 
                 </div>
             </div>
+
+            <hr>
+            <h2>My Orders</h2>
+            <hr>
+
+            <?php
+                $sql = "SELECT * FROM orders WHERE users_data_users_id = " . $_SESSION["user_id"] . ";";
+                if ($result = $conn->query($sql)) {
+                    echo "<table class='table'>";
+                    foreach($result as $row) {
+                        echo "<tr>
+                                <td>{$row['id']}</td>
+                                <td>{$row['date']}</td>
+                                <td class='text-right'>{$row['amount']}</td>
+                                <td>{$row['status']}</td>
+                            </tr>";
+                    }
+                    echo "</table>";
+                } else {
+                    echo "<p class='error'>Podaci nisu ocitani. $conn->error</p>";
+                }
+            ?>
+
         <?php
         } else {
-            echo "Los SQL";
+            echo "<p class='error'>Podaci nisu ocitani. $conn->error</p>";
         }
 
     ?>

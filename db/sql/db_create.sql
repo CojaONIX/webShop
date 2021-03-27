@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS orders ;
 
 CREATE TABLE IF NOT EXISTS orders (
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-  date TIMESTAMP(6) NOT NULL,
+  date TIMESTAMP NOT NULL,
   amount DECIMAL(10,2) NOT NULL,
   status TINYINT(9) NOT NULL,
   users_data_users_id INT UNSIGNED NOT NULL,
@@ -121,6 +121,7 @@ DROP TABLE IF EXISTS orders_has_products ;
 CREATE TABLE IF NOT EXISTS orders_has_products (
   orders_id INT UNSIGNED NOT NULL,
   products_id INT UNSIGNED NOT NULL,
+  qty INT UNSIGNED NOT NULL,
 
   PRIMARY KEY (orders_id, products_id),
   FOREIGN KEY (orders_id) REFERENCES orders (id),
