@@ -1,5 +1,6 @@
 
 <?php
+    $title = "Register";
     require_once "components/head.php";
     require_once 'components/nav.php';
     require_once "../db/conn.php";

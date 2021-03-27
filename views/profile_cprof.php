@@ -1,4 +1,5 @@
 <?php
+    $title = "Profile";
     require_once "components/head.php";
     include "components/nav.php";
 

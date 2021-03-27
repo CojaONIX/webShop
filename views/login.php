@@ -1,46 +1,47 @@
 <?php
-  require_once "components/head.php";
-  require_once 'components/nav.php';
+    $title = "Login";
+    require_once "components/head.php";
+    require_once 'components/nav.php';
 
-  //session_start();
+    //session_start();
 
-  if(isset($_SESSION['user_id'])) {
-      header("Location: home.php");
-  }
+    if(isset($_SESSION['user_id'])) {
+        header("Location: home.php");
+    }
 
-  require_once "../db/conn.php";
-  $loginErr = "";
-  if($_SERVER["REQUEST_METHOD"] == "POST") {
-      $username =  $conn->real_escape_string($_POST["username"]);
-      $pass =  $conn->real_escape_string($_POST["pass"]);
-      $val = true;
-      if(empty($username)) {
-          $val = false;
-          $loginErr = "Username cannot be left blank!";
-      }
-      if(empty($pass)) {
-          $val = false;
-          $loginErr .= "<br>Password cannot be left blank!";
-      }
+    require_once "../db/conn.php";
+    $loginErr = "";
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $username =  $conn->real_escape_string($_POST["username"]);
+        $pass =  $conn->real_escape_string($_POST["pass"]);
+        $val = true;
+        if(empty($username)) {
+            $val = false;
+            $loginErr = "Username cannot be left blank!";
+        }
+        if(empty($pass)) {
+            $val = false;
+            $loginErr .= "<br>Password cannot be left blank!";
+        }
 
-      if($val) {
-          $sql = "SELECT * FROM users WHERE username = '$username'";
-          $result = $conn->query($sql);
-          if($result->num_rows == 0) {
-              $loginErr = "This username doesn't exist!";
-          } else {
-              $row = $result->fetch_assoc();
-              $dbPass = $row["pass"];
-              if(md5($pass) != $dbPass) {
-                  $loginErr .= "<br>Incorect password!";
-              } else {
-                  $_SESSION["user_id"] = $row["id"];
-                  $_SESSION['user_name'] = $row['username'];
-                  header("Location: " . $_SESSION['back_page']);
-              }
-          }
-      }
-  }  
+        if($val) {
+            $sql = "SELECT * FROM users WHERE username = '$username'";
+            $result = $conn->query($sql);
+            if($result->num_rows == 0) {
+                $loginErr = "This username doesn't exist!";
+            } else {
+                $row = $result->fetch_assoc();
+                $dbPass = $row["pass"];
+                if(md5($pass) != $dbPass) {
+                    $loginErr .= "<br>Incorect password!";
+                } else {
+                    $_SESSION["user_id"] = $row["id"];
+                    $_SESSION['user_name'] = $row['username'];
+                    header("Location: " . $_SESSION['back_page']);
+                }
+            }
+        }
+    }  
 ?>
 
     <div class="container">

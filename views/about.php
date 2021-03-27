@@ -1,4 +1,5 @@
 <?php
+    $title = "About";
     require_once "components/head.php";
 ?>
 

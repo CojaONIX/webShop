@@ -9,6 +9,12 @@ VALUES
     (null, "Milan", MD5(123456), "email2@gmail.com"),
     (null, "Goran", MD5(123456), "email3@gmail.com");
 
+INSERT INTO users_data
+VALUES 
+    (1, "Darko", null, null, null, null, null, null),
+    (2, "Milan", null, null, null, null, null, null),
+    (3, "Goran", "Cojic", "Srbija", "063/123 45 67", "18220", "Aleksinac", "RVI 7");    
+
 INSERT INTO main_categories
 VALUES 
     (null, "Computers", null, null),

@@ -1,4 +1,5 @@
 <?php
+    $title = "Shop";
     require_once "components/head.php";
 ?>
 

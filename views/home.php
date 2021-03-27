@@ -1,6 +1,7 @@
 
 
 <?php
+    $title = "Home";
     require_once "components/head.php";
 ?>
 

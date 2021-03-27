@@ -1,6 +1,14 @@
+<style>
+  #ddAvatar {
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+  }
+</style>
 
-
-<nav class="navbar navbar-expand-md navbar-light bg-light mb-5">
+<nav class="container navbar navbar-expand-md navbar-light bg-light mb-5">
 
   <a class="navbar-brand" href="home.php"><img width=140; id="logo" src="images/logo.png" alt="logo"></a>
   
@@ -33,14 +41,15 @@
   session_start();
 
   if(isset($_SESSION['user_id'])) { ?>
-      <ul class="navbar-nav nav text-center">
-      <li class="nav-item">
-        <a class="nav-link font-weight-bold" href="profile.php">Hello, <?php echo $_SESSION['user_name']; ?></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link font-weight-bold pr-0" href="logout.php">Logout</a>
-      </li>
-    </ul>
+    <p class="nav-link font-weight-bold">Hello, <?php echo $_SESSION['user_name']; ?></p>
+    <div class="dropdown">
+      <img class="dropdown-toggle" id="ddAvatar" src="<?php echo "profile/avatars/" . $_SESSION['user_name'] . ".jpg"; ?>" alt="" onerror="this.onerror=null; this.src='profile/avatars/noImage.png'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="ddAvatar">
+        <a class="dropdown-item" href="profile.php">Profile</a>
+        <a class="dropdown-item" href="logout.php">Logout</a>
+      </div>
+    </div>
   <?php
     } else { ?>
 
@@ -60,3 +69,4 @@
   </div>
 
 </nav>
+
