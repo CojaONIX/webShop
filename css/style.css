@@ -1,1 +1,17 @@
 
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+.maybe {
+    color: blue;
+}
+
+.form-group span:not(:first-child) {
+    display: block;
+    font-size: 14px;
+}

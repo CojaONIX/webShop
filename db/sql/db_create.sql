@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS users_data (
   first_name VARCHAR(45) NULL,
   last_name VARCHAR(45) NULL,
   country VARCHAR(45) NULL,
-  phone VARCHAR(16) NULL,
+  phone VARCHAR(20) NULL,
   postal_code VARCHAR(10) NULL,
   city VARCHAR(45) NULL,
   address VARCHAR(60) NULL,
