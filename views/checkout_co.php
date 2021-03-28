@@ -10,7 +10,8 @@
         }
 
         $id = $_SESSION["user_id"];
-        $sql = "INSERT INTO orders VALUES (null, CURRENT_TIMESTAMP, $total, 1, $id);";
+        $fa = $_POST['full_address'];
+        $sql = "INSERT INTO orders VALUES (null, '$fa', CURRENT_TIMESTAMP, $total, 1, $id);";
         if($conn->query($sql)) {
             //echo "<p class='success'>Podaci su dodati u bazu.</p>";
             $last_id = $conn->insert_id;

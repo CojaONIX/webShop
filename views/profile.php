@@ -68,6 +68,7 @@
                     foreach($result as $row) {
                         echo "<tr>
                                 <td>{$row['id']}</td>
+                                <td>{$row['full_address']}</td>
                                 <td>{$row['date']}</td>
                                 <td class='text-right'>{$row['amount']}</td>
                                 <td>{$row['status']}</td>
