@@ -46,6 +46,89 @@
         return ['msg'=>$msg, 'valid_value'=>$data];
     }
 
+    function validDate($data, $od, $do) {
+        if($data != "") {
+            if($data < $od || $data > $do) {
+                $isValidForm = false;
+                $msg =  "<span class='error'>Datum mora biti izmedju $od i $do</span>";
+            } else {
+                $msg = "<span class='success'>OK</span>";
+            }
+            $this->setFields($data, $data, $msg);
+        } else {
+            $msg = "<span class='success'>OK</span>";
+            $this->setFields($data, "", $msg);
+        }
+    }
+
+    function validRadio($data, $in) {
+        if (in_array($data, $in)) {
+            $msg = "<span class='success'>OK</span>";
+        } else {
+            $isValidForm = false;
+            $msg =  "<span class='error'>Izaberite jednu od opcija.</span>";
+        }
+
+        $this->setFields($data, $data, $msg);
+    }
+
+    function validRetype($rpass, $pass) {
+        if($rpass == $pass) {
+            $msg = "<span class='success'>OK</span>";
+        } else {
+            $isValidForm = false;
+            $msg = "<span class='error'>Retype Password!</span>";
+        }
+
+        $this->setFields($rpass, $rpass, $msg);
+    }
+
+      // TODO: mozda da dodas ispitivanje vise slucajeva i vracanje kustomizovanih poruka...?
+
+  // ! validacija za first n last name, country, city, address (neka ga za sada da svi mora da budu do 45 karaktera)
+  function validateString($str) {
+    $except = preg_match('/[^a-zA-Z\ĐđŽžĆćČčŠš\s]/', $str);
+    $length = strlen($str);
+
+    if (!$except && $length <= 45) {
+      return trim(preg_replace('/\s\s+/', ' ', $str));
+    }
+    return false;
+  }
+
+  // ! validacija za postal code, phone (neka ga za sada da oba mora da budu do 10 brojeva)
+  function validateNumber($str) {
+    $except = preg_match('/\d/', $str);
+    $length = strlen($str);
+
+    //  TODO: usaglasi sa bazom, da li da se primora unosenje striktnog broja cifara, ili koliko minimum cifara mora...
+    if (!$except && $length <= 10) return true;
+    return false;
+  }
+
+  function validateEmail($str) {
+    $except = preg_match('/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix', $str);
+    $length = strlen($str);
+
+    // TODO: dodaj proveru da li u bazi vec postoji email
+    if ($except && $length <= 45) return true;
+    return false;
+  }
+
+  function validateUsername($conn, $str) {
+    // TODO: mozda da izbacis potpuno ili smanjis broj dozvoljenih spec chara
+    $except = preg_match('/[^a-zA-Z\ĐđŽžĆćČčŠš\d\.\@\-\_\#\$]/', $str);
+    $length = strlen($str);
+
+    if (!$except && $length >= 3 && $length <= 45) {
+      $sql = "SELECT * FROM users WHERE username = '$str'";
+
+      if (!$conn->query($sql)->num_rows) return true;
+    }
+    return false;
+  }
+
+
     function bsValidForm($fields, $form_data) {
         foreach($fields as $k=>$v) {
             echo '<div class="form-group">';
@@ -98,7 +181,7 @@
         "phone"=>[
             "type"=>"text",
             "label"=>"Phone",
-            "valid"=>"0-9 ",
+            "valid"=>"0-9 \/",
             "min_len"=>1,
             "max_len"=>20
         ],
