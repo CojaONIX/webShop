@@ -12,132 +12,193 @@
         header("Location: login.php");
     }
 
-    require_once "../validation/Validation.php";
 
-    $fname = new Validation();
-    $lname = new Validation();
-    $country = new Validation();
-    $phone = new Validation();
-    $postal_code = new Validation();
-    $city = new Validation();
-    $address = new Validation();
+    function validText($data, $minLen, $maxLen, $reg) {
+        $msg = "";
+        $original = $data;
+
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        $data = preg_replace('/\s+/', ' ', $data);
+
+        if($data != $original) {
+            $msg .= "<span class='maybe'>Izbaceni su nepozeljni karakteri</span>";
+        }
+
+        if (strlen($data) < $minLen || strlen($data) > $maxLen) {
+            $msg .= "<span class='error'>Polje mora sadrzati $minLen-$maxLen karaktera</span>";
+        }
+
+        if (!preg_match("/^[$reg]*$/", $data)) {
+            $msg .= "<span class='error'>Dozvoljeni karakteri: $reg</span>";
+            $izbaci = preg_replace("/[$reg]/", '', $data);
+            $msg .= "<span class='maybe'>Nedozvoljeni karakteri: $izbaci</span>";
+            $data = preg_replace("/[^$reg]/", '', $data);
+        }            
+
+        if(empty($msg)) {
+            //$msg = "<span class='success'>OK</span>";
+        } else {
+            $isValidForm = false;
+        }
+
+        return ['msg'=>$msg, 'valid_value'=>$data];
+    }
+
+    function bsValidForm($fields, $form_data) {
+        foreach($fields as $k=>$v) {
+            echo '<div class="form-group">';
+            echo '<label for="' . $k . '">' . $v['label'] . ': <span class="error">* </span></label>';
+            $valid = validText($form_data[$k], $fields[$k]['min_len'], $fields[$k]['max_len'], $fields[$k]['valid']);
+            switch ($v['type']) {
+                case "text" :
+                case "number" :
+                case "hidden" :
+                case "color" :
+                    echo '<input type="' . $v['type'] . '" class="form-control" name="' . $k . '" id="' . $k . '" value="' . $valid['valid_value'] . '">';
+                    break;
+                case "textarea" :
+                    echo '<textarea class="form-control" name="' . $k . '" id="' . $k . '">' . $valid['valid_value'] . '</textarea>';
+                    break;
+
+                default:
+                    echo "<p>Nepoznat tip polja.</p>";
+            }
+            echo $valid['msg'];
+            echo '</div>';
+
+        }
+
+
+    }
+
+    $fields = [
+        "first_name"=>[
+            "type"=>"text",
+            "label"=>"First name",
+            "valid"=>"a-zA-Z ",
+            "min_len"=>1,
+            "max_len"=>45
+        ],
+        "last_name"=>[
+            "type"=>"text",
+            "label"=>"Last name",
+            "valid"=>"a-zA-Z ",
+            "min_len"=>1,
+            "max_len"=>45
+        ],
+        "country"=>[
+            "type"=>"text",
+            "label"=>"Country",
+            "valid"=>"a-zA-Z ",
+            "min_len"=>1,
+            "max_len"=>45
+        ],
+        "phone"=>[
+            "type"=>"text",
+            "label"=>"Phone",
+            "valid"=>"0-9 ",
+            "min_len"=>1,
+            "max_len"=>20
+        ],
+        "postal_code"=>[
+            "type"=>"text",
+            "label"=>"Postal code",
+            "valid"=>"0-9",
+            "min_len"=>5,
+            "max_len"=>5
+        ],
+        "city"=>[
+            "type"=>"text",
+            "label"=>"City",
+            "valid"=>"a-zA-Z ",
+            "min_len"=>1,
+            "max_len"=>45
+        ],
+        "address"=>[
+            "type"=>"text",
+            "label"=>"Address",
+            "valid"=>"a-zA-Z0-9 ",
+            "min_len"=>1,
+            "max_len"=>60
+        ]
+
+    ];
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        $fname->validText($_POST["fname"], 1, 45, "a-zA-Z ");
-        $lname->validText($_POST["lname"], 1, 45, "a-zA-Z ");
-        $country->validText($_POST["country"], 1, 45, "a-zA-Z ");
-        $phone->validText($_POST["phone"], 1, 16, "0-9\/ +-");
-        $postal_code->validText($_POST["postal_code"], 1, 10, "0-9");
-        $city->validText($_POST["city"], 1, 45, "a-zA-Z ");
-        $address->validText($_POST["address"], 1, 60, "0-9a-zA-Z ");
+        $form_data = $_POST;
 
-        if (Validation::$isValidForm) {
-            $fn = $conn->real_escape_string($fname->getValid());
-            $ln = $conn->real_escape_string($lname->getValid());
-            $cn = $conn->real_escape_string($country->getValid());
-            $ph = $conn->real_escape_string($phone->getValid());
-            $pc = $conn->real_escape_string($postal_code->getValid());
-            $cy = $conn->real_escape_string($city->getValid());
-            $ad = $conn->real_escape_string($address->getValid());
+        // if (Validation::$isValidForm) {
+        //     $fn = $conn->real_escape_string($fname->getValid());
+        //     $ln = $conn->real_escape_string($lname->getValid());
+        //     $cn = $conn->real_escape_string($country->getValid());
+        //     $ph = $conn->real_escape_string($phone->getValid());
+        //     $pc = $conn->real_escape_string($postal_code->getValid());
+        //     $cy = $conn->real_escape_string($city->getValid());
+        //     $ad = $conn->real_escape_string($address->getValid());
 
-            $sql = "UPDATE users_data
-                    SET
-                        first_name = '$fn',
-                        last_name = '$ln',
-                        country = '$cn',
-                        phone = '$ph',
-                        postal_code = '$pc',
-                        city = '$cy',
-                        address = '$ad'
-                    WHERE users_id = $profile_id;";
+        //     $sql = "UPDATE users_data
+        //             SET
+        //                 first_name = '$fn',
+        //                 last_name = '$ln',
+        //                 country = '$cn',
+        //                 phone = '$ph',
+        //                 postal_code = '$pc',
+        //                 city = '$cy',
+        //                 address = '$ad'
+        //             WHERE users_id = $profile_id;";
 
-            if($conn->query($sql)) {
-                echo "<div class='container alert alert-success' role='alert'>
-                        Change Profile: Success.
-                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>";
-            } else {
-                echo "<div class='container alert alert-danger' role='alert'>
-                        Change Profile: Error - $conn->error.
-                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>";
-            }
-        }
+        //     if($conn->query($sql)) {
+        //         echo "<div class='container alert alert-success' role='alert'>
+        //                 Change Profile: Success.
+        //                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        //                     <span aria-hidden='true'>&times;</span>
+        //                 </button>
+        //             </div>";
+        //     } else {
+        //         echo "<div class='container alert alert-danger' role='alert'>
+        //                 Change Profile: Error - $conn->error.
+        //                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        //                     <span aria-hidden='true'>&times;</span>
+        //                 </button>
+        //             </div>";
+        //     }
+        // }
+
     } else {
-        $sql = "SELECT *
+        $keys = implode(", ", array_keys($fields));
+        $sql = "SELECT $keys
         FROM users_data
         WHERE users_id=$profile_id;";
 
         if($result = $conn->query($sql)) {
-            $p = $result->fetch_assoc();
-            $fname->setValid($p['first_name']);
-            $lname->setValid($p['last_name']);
-            $country->setValid($p['country']);
-            $phone->setValid($p['phone']);
-            $postal_code->setValid($p['postal_code']);
-            $city->setValid($p['city']);
-            $address->setValid($p['address']);
+            $form_data = $result->fetch_assoc();
         }
     }
+
 ?>
+
 <div class="container">
     <div class="col-lg-6 mx-auto">
         <div class="card">
-            <div class="card-header"><h4>Change Profile<a class="btn btn-outline-primary float-right" href="profile.php">Back to Profile</a></h4></div>
-            <div class="card-body">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-                    <div class="row">
-                        <div class="form-group col-sm-6">
-                            <label for="fname">First name: <span class="error">* </span></label>
-                            <input type="text" class="form-control" name="fname" id="fname" value="<?php echo $fname->getValid();?>">
-                            <?php echo $fname->getMsg();?>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <label for="lname">Last name: <span class="error">* </span></label>
-                            <input type="text" class="form-control" name="lname" id="lname" value="<?php echo $lname->getValid();?>">
-                            <?php echo $lname->getMsg();?>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-sm-6">
-                            <label for="country">Country: <span class="error">* </span></label>
-                            <input type="text" class="form-control" name="country" id="country" value="<?php echo $country->getValid();?>">
-                            <?php echo $country->getMsg();?>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <label for="phone">Phone: <span class="error">* </span></label>
-                            <input type="text" class="form-control" name="phone" id="phone" value="<?php echo $phone->getValid();?>">
-                            <?php echo $phone->getMsg();?>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-sm-6">
-                            <label for="postal_code">Postal code: <span class="error">* </span></label>
-                            <input type="text" class="form-control" name="postal_code" id="postal_code" value="<?php echo $postal_code->getValid();?>">
-                            <?php echo $postal_code->getMsg();?>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <label for="city">City: <span class="error">* </span></label>
-                            <input type="text" class="form-control" name="city" id="city" value="<?php echo $city->getValid();?>">
-                            <?php echo $city->getMsg();?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address: <span class="error">* </span></label>
-                        <input type="text" class="form-control" name="address" id="address" value="<?php echo $address->getValid();?>">
-                        <?php echo $address->getMsg();?>
-                    </div>
+            <div class="card-header">
+                <h4>Change Profile<a class="btn btn-outline-primary float-right" href="profile.php">Back to Profile</a></h4>
+            </div>
 
-                    <input type="submit" value="Change Profile" class="btn btn-primary form-control">
+            <div class="card-body">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+                    <?php
+                        bsValidForm($fields, $form_data);
+                    ?>
+                    <input type="submit" value="New Change Profile" class="btn btn-primary form-control">
+
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 
     <script>
         if ( window.history.replaceState ) {
