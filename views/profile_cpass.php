@@ -12,11 +12,12 @@
         header("Location: login.php");
     }
 
-    require_once "../validation/Validation.php";
+    require_once "../validation/validation.php";
 
     $passwordOld = new Validation();
     $password = new Validation();
     $rpassword = new Validation();
+    $isValidForm = true;
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $sql = "SELECT pass FROM users WHERE id=$profile_id;";
@@ -25,14 +26,14 @@
             $passDB = $result->fetch_assoc()["pass"];
             if($passMD5 != $passDB) {
                 $passwordOld->setMsg("<span class='error'>Wrong Password!</span>");
-                Validation::$isValidForm = false;
+                $isValidForm = false;
             } else {
                 $password->validText($_POST["password"], 3, 25, "a-zA-Z0-9 ?.!_");
                 $rpassword->validRetype($_POST["rpassword"], $password->getValid());
             }
         }
 
-        if (Validation::$isValidForm) {
+        if ($isValidForm) {
             $pass = $conn->real_escape_string($password->getValid());
             $sql = "UPDATE users
                     SET pass = MD5('$pass')

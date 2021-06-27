@@ -76,7 +76,29 @@
 
 
 
-    function bsValidForm($fields, $form_data) {
+    function bsValidForm($form_deff, $fields) {
+        require_once "../db/conn.php";
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $form_data = $_POST;   
+        } else {
+            $keys = implode(", ", array_keys($fields));
+            $sql = "SELECT $keys
+            FROM {$form_deff['table']}
+            WHERE {$form_deff['table_id_col']}={$form_deff['id']};";
+
+            $form_data = $conn->query($sql)->fetch_assoc();
+        }        
+?>
+        <div class="card">
+            <div class="card-header">
+                <h4><?php echo $form_deff['title'] ?><a class="btn btn-outline-primary float-right" href="profile.php">Back to Profile</a></h4>
+            </div>
+
+            <div class="card-body">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+                    <div class="row">
+<?php
+        $isValidForm = true;
         foreach($fields as $k=>$v) {
             $add_class = " col-12";
             if(isset($v['bs_row_class'])) {
@@ -99,11 +121,47 @@
                 default:
                     echo "<p>Nepoznat tip polja.</p>";
             }
+            if($valid['msg'] != "") {
+                $isValidForm = false;
+            }
             echo $valid['msg'];
             echo "</div>\n";
-
-
         }
 
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && $isValidForm) {
+            $set_string = [];
+            foreach($form_data as $k=>$v) {
+                $set_string[] = $k . " = '" . $conn->real_escape_string($v) . "'";
+            }
+
+            $sql = "UPDATE users_data
+                    SET " . implode(", ", $set_string) .
+                    " WHERE {$form_deff['table_id_col']}={$form_deff['id']};";           
+
+            if($conn->query($sql)) {
+                echo "<div class='container alert alert-success' role='alert'>
+                        Change Profile: Success.
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>";
+            } else {
+                echo "<div class='container alert alert-danger' role='alert'>
+                        Change Profile: Error - $conn->error.
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>";
+            }
+        }            
+?>
+
+                    <input type="submit" value="<?php echo $form_deff['subnit_text'] ?>" class="btn btn-primary form-control">
+
+                    </div>
+                </form>
+            </div>
+        </div>        
+<?php 
     }
 ?>
