@@ -80,24 +80,20 @@
 
     <main class="container">
         <?php
-
-            function drawTable($m, $k) {
-                echo "<h3>" . $m['caption'] . "</h3>";
-                echo "<hr>";
-
-                require_once "../db/conn.php";
-                $col = $m['get_db_columns'];
-                $sql = "SELECT $col FROM $k;";
+            require_once "../db/conn.php";
+            function drawTable($db_table, $columns = "*") {
+                global $conn;
+                $sql = "SELECT $columns FROM $db_table;";
 
                 $result = $conn->query($sql);
 
                 if($result->num_rows > 0) {
-                    echo "<div id='$k' class='tblDiv'>";
+                    echo "<div id='$db_table' class='tblDiv'>";
                     echo "<button class='C'>C</button>";
                     echo "<table class='display compact'>";
                     
-                    $columns = array_keys($result->fetch_assoc());
-                    $zaglavlje = implode("</th><th>", $columns);
+                    $col = array_keys($result->fetch_assoc());
+                    $zaglavlje = implode("</th><th>", $col);
                     echo "\n\t<thead><tr><th>Action</th><th>$zaglavlje</th></tr></thead>";
 
                     echo "\n\t<tbody>";
@@ -118,7 +114,7 @@
                     echo  "<h2>Nema podataka u tabeli!<h2>";
                 }
 
-                $conn->close();
+                //$conn->close();
             }
         ?>
 
@@ -126,39 +122,27 @@
             <div id="tabMenu" class="col-sm-2">
                 <?php
                     $menu = [
-                        "home" => [
-                            "caption" => "Home",
-                            "get_db_columns" => "*"
-                        ],
-                        "main_categories" => [
-                            "caption" => "mCategories",
-                            "get_db_columns" => "*"
-                        ],
-                        "categories" => [
-                            "caption" => "Categories",
-                            "get_db_columns" => "*"
-                        ],
-                        "products" => [
-                            "caption" => "Products",
-                            "get_db_columns" => "id, name, qty, price"
-                        ],
-                        "orders" => [
-                            "caption" => "Orders",
-                            "get_db_columns" => "*"
-                        ],                                                                                                
+                        "home" => "Home",
+                        "main_categories" => "mCategories",
+                        "categories" => "Categories",
+                        "products" => "Products",
+                        "orders" => "Orders"                                                                                             
 
                     ];
 
+                    $get_menu = isset($_GET['menu']) ? $_GET['menu'] : "home";
                     foreach($menu as $k=>$m) {
-                        $active = $k == $_GET['menu'] ? " active" : "";
-                        echo "<a class='btn btn-outline-primary col-12 my-1$active' href='?menu=$k'>" . $m['caption'] . "</a>";
+                        $active = $k == $get_menu ? " active" : "";
+                        echo "<a class='btn btn-outline-primary col-12 my-1$active' href='?menu=$k'>" . $m . "</a>";
                     }
                 ?>
             </div>
 
             <div id="tabContents" class="col-sm-10">
                 <?php
-                    drawTable($menu[$_GET['menu']], $_GET['menu']);
+                    if (file_exists("partials/_" . $get_menu . ".php")) {
+                        include "partials/_" . $get_menu . ".php";
+                    }
                 ?>
             </div>
         </div>
