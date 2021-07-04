@@ -26,21 +26,6 @@
             transition: 0.3s;
         }
 
-
-        /* Animacija pri otvaranj Modal */
-        .modal.fade .modal-dialog {
-            transform: scale(0.1);
-            opacity: 0;
-            transition: all 0.5s;
-        }
-        .modal.fade.show .modal-dialog {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-
-
-
     </style>
 </head>
 
@@ -80,42 +65,9 @@
 
     <main class="container">
         <?php
-            require_once "../db/conn.php";
-            function drawTable($db_table, $columns = "*") {
-                global $conn;
-                $sql = "SELECT $columns FROM $db_table;";
 
-                $result = $conn->query($sql);
+            require_once "crud_forms.php";
 
-                if($result->num_rows > 0) {
-                    echo "<div id='$db_table' class='tblDiv'>";
-                    echo "<button class='C'>C</button>";
-                    echo "<table class='display compact'>";
-                    
-                    $col = array_keys($result->fetch_assoc());
-                    $zaglavlje = implode("</th><th>", $col);
-                    echo "\n\t<thead><tr><th>Action</th><th>$zaglavlje</th></tr></thead>";
-
-                    echo "\n\t<tbody>";
-                    foreach($result as $row) {
-                        $actions = "<td>";
-                        $actions .= "<button class='R'>R</button>";
-                        $actions .= "<button class='U'>U</button>";
-                        $actions .= "<button class='D'>D</button>";
-                        $actions .= "</td>";
-                        echo "<tr>$actions<td>" . implode("</td><td>", $row) . "</td></tr>\n";
-                    }
-                    echo "</tbody>";
-                    
-                    //echo "<tfoot><tr><th></th></tr></tfoot>";
-                    echo "</table>";
-                    echo "</div>";
-                } else {
-                    echo  "<h2>Nema podataka u tabeli!<h2>";
-                }
-
-                //$conn->close();
-            }
         ?>
 
         <div class="row">

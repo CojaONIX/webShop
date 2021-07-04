@@ -3,8 +3,42 @@
 <hr>
 
 <?php
-    drawTable("products", "id, name, qty, price");
-?>
 
-<hr>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat mollitia nulla, neque cum illo vitae totam laudantium pariatur aperiam, quod ea magnam quibusdam porro asperiores eveniet hic, ad ipsam ex.</p>
+    $form_deff = [
+        "table"=>"products",
+        "table_id_col"=>"id",
+        "title"=>"Products",
+        "subnit_text"=>"Save",
+        "tableColumns"=>"id, name, qty, price"
+    ];
+
+    $fields = [
+        "name"=>[
+            "type"=>"text",
+            "label"=>"Product Name",
+            "valid"=>"a-zA-Z0-9 ",
+            "min_len"=>1,
+            "max_len"=>100,
+            "bs_row_class"=>"col-sm-9"
+        ],
+        "qty"=>[
+            "type"=>"number",
+            "label"=>"Quantity",
+            "valid"=>"0-9",
+            "min_len"=>0,
+            "max_len"=>1000000,
+            "bs_row_class"=>"col-sm-3"
+        ],
+        "short_description"=>[
+            "type"=>"textarea",
+            "label"=>"Short Description",
+            "valid"=>"a-zA-Z0-9 ",
+            "min_len"=>0,
+            "max_len"=>1000000
+        ]
+    ];
+
+    crudForms($form_deff, $fields);
+
+    
+?>
